@@ -27,6 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+UPLOADCARE = {
+    'pub_key': '3bdec1fdd7eea0cd186a',
+    'secret': '77f0ba841578e39d56c3'
+}
 
 # Application definition
 
@@ -35,6 +39,7 @@ INSTALLED_APPS = [
     'pyuploadcare.dj',
     'tinymce',
     'bootstrap4',
+    'url_or_relative_url_field'
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -80,7 +85,9 @@ WSGI_APPLICATION = 'web.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': 'awards',
+        'USER': 'moringa',
+        'PASSWORD': 'p@$$w0rd',
     }
 }
 
@@ -109,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Nairobi'
 
 USE_I18N = True
 
