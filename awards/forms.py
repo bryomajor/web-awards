@@ -11,3 +11,7 @@ class ProfileEditForm(forms.ModelForm):
         model = Profile
         fields = ('profile_photo', 'bio', 'website')
 
+class VotesForm(forms.ModelForm):
+    class Meta:
+        model = Rates
+        fields = ('design', 'usability', 'content')
