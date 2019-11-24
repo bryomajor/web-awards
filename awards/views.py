@@ -115,3 +115,31 @@ def profile(request, username):
         profile_details = Profile.filter_by_id(profile.id)
 
     return render(request, 'users/profile.html', {"profile":profile, "profile_details":profile_details, "projects":projects})
+
+@login_required(login_url='/accounts/login/')
+def post_site(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form = ProjectUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            home = form.save(commit=False)
+            home.profile = current_user
+            form.save()
+        return redirect('home')
+    else:
+        form = ProjectUploadForm()
+
+    return render(request, 'uploads.html', {"form":form,})
+
+def search_results(request):
+    if 'titles' in request.GET and request.GET['titles']:
+        search_term = request.GET.get("titles")
+        searched_projects = Projects.search_by_projects(search_term)
+
+        message = f'{search_term}'
+
+        return render(request, 'search.html', {"message":message, "projects":searched_projects})
+
+    else:
+        message = "You haven't searched for any term"
+        return render(request, 'search.html', {"message":message, "projects":searched_projects})
