@@ -1,0 +1,28 @@
+{% extends 'registration/base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+            {% if form.errors %}
+            <p>Password or username is incorrect!</p>
+            {% endif %}
+            <div class="form-section">
+                <form action="/accounts/login/" method="POST">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary btn-sm" value="Log In">
+                    </div>
+                    <input type="hidden" name="next" value="/">
+                </form>
+            </div>
+            <p class="text-center">Forgot Password?</p>
+        </div>
+        <div class="section">
+            <p class="text-center">Don't have an account?<a href="/signup/">Sign Up</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
