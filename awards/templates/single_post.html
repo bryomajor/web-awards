@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+<div class="container">
+    <div class="overlay">
+        <img src="{{projects.image_landing.url}}" alt="">
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <h3>Content</h3>
+            <hr class="bg-default">
+            <h4>{{content}}</h4>
+        </div>
+        <div class="col-md-3">
+            <h3>Usability</h3>
+            <hr class="bg-success">
+            <h4>{{usability}}</h4>
+        </div>
+        <div class="col-md-3">
+            <h3>Design</h3>
+            <hr class="bg-info">
+            {{design}}
+        </div>
+        <div class="col-md-3">
+            <h3>Average</h3>
+            <hr class="bg-danger">
+            <h4>{{average}}</h4>
+        </div>
+    </div>
+    {% if user.is_authenticated %}
+    <button class="btn btn-outline-info" type="button
+    " data-toggle="modal" data-target="#VotesForm">Rate</button>
+    <a href="{{projects.link}}" class="btn btn-md" target="_blank">LIVE SITE</a>
+    {% if user.id not in auth %}
+    <div class="modal fade" id="VotesForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title font-weight-bold">Vote</h4>
+                    <button class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form animated slideInDown">
+                        <form action="/projects/{{projects.id}}" method="POST">
+                            {% csrf_token %}
+                            {% bootstrap_form form %}
+                            <button class="btn btn-outline-info modal-footer d-flex justify-content-center" type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <p class="alert alert-success">Thanks for your rating!</p>
+    {% endif %}
+    {% else %}
+    <a href="/accounts/login" class="btn btn-outline-info">Log in to rate</a>
+    {% endif %}
+    <div class="card">
+        <div class="card-header">
+            <h4>Total Votes: {{all|length}}</h4>
+        </div>
+        <div class="list-group">
+            <ul class="list-group">
+                {% if all %}
+                <table class="table">
+                    <th>Voters</th>
+                    <th>Rating</th>
+                    {% for you in all %}
+                    <tr>
+                        <td>
+                            <img src="{{you.user.profile.profile_photo.url}}" alt="">
+                            {{you.user}}
+                        </td>
+                        <td>
+                            <a href="">{{you.design}}.0</a>
+                            <a href="">{{you.usability}}.0</a>
+                            <a href="">{{you.content}}.0</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                {% else %}
+                <li class="list-group-item alert alert-info">No Votes Available</li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
