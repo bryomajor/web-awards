@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            {% if profile_details.photo %}
+            <img src="{{profile_details.photo.cdn_url}}" alt="Profile Photo">
+            {% else %}
+            <img src="/static/images/avatr.jpg" alt="Avatar">
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <ul class="list-inline">
+                <li class="list-inline-item">
+                    <h4>{{profile.username}}</h4>
+                </li>
+                {% if profile.username == user.username %}
+                <li class="list-inline-item">
+                    <a href="{% url 'edit_profile' %}" class="btn btn-sm btn-outline-dark">Edit Profile</a>
+                </li>
+                <li class="list-inline-item">
+                    <a data-toggle="modal" data-target="#settings"><i class="fas fa-ellipsis-h"></i></a>
+                </li>
+                {% endif %}        
+            </ul>
+            <ul class="list-inline">
+                <li class="list-inline-item">
+                    {% autoescape on %}
+                    {{profile_details.bio| safe}}
+                    {% endautoescape %}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
