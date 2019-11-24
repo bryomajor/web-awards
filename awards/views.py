@@ -117,6 +117,27 @@ def profile(request, username):
     return render(request, 'users/profile.html', {"profile":profile, "profile_details":profile_details, "projects":projects})
 
 @login_required(login_url='/accounts/login/')
+def edit_profile(request):
+    title = 'Edot Profile'
+    profile = User.objects.get(username=request.user)
+    try:
+        profile_details = Profile.get_by_id(profile.id)
+    except:
+        profile_details = Profile.filter_by_id(profile.id)
+
+    if request.method == 'POST':
+        form = ProfileEditForm(request.POST, request.FILES)
+        if form.is_valid():
+            edit = form.save(commit=False)
+            edit.user = request.user
+            edit.save()
+            return redirect('profile', username=request.user)
+    else:
+        form = ProfileEditForm()
+
+    return render(request, 'profile/edit_profile.html', {"form":form, "profile_details":profile_details})
+
+@login_required(login_url='/accounts/login/')
 def post_site(request):
     current_user = request.user
     if request.method == 'POST':
