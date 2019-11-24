@@ -4,7 +4,7 @@ from .models import Profile, Projects, Rates
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .forms import ProfileEditForm, ProjectUploadForm, VotesForm, ReviewForm
-from .permissions import IsAdminOrReadOnly
+# from .permissions import IsAdminOrReadOnly
 
 # Create your views here.
 def index(request):
@@ -104,3 +104,14 @@ def projects(request, project_id):
         'reviews':reviews,
     }
     return render(request, 'single_post.html', context)
+
+@login_required(login_url='/accounts/login/')
+def profile(request, username):
+    profile = User.objects.get(username = username)
+
+    try:
+        profile_details = Profile.get_by_id(profile.id)
+    except:
+        profile_details = Profile.filter_by_id(profile.id)
+
+    return render(request, 'users/profile.html', {"profile":profile, "profile_details":profile_details, "projects":projects})
