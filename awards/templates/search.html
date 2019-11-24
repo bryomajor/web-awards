@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        {% if projects %}
+        <h3>Found {{projects|length}}</h3>
+        {% else %}
+        <h3>Found ) projects of searched term {{message}}</h3>
+        {% endif %}
+    </div>
+    <div class="row">
+        {% for project in projects %}
+        <div class="col-md-4">
+            <div class="card-group">
+                <div class="overlay">
+                    <img src="{{project.image_landing.url}}" alt="" class="card-img-top">
+                    <div class="flex-center">
+                        <a href="{% url 'projects' project.pk %}" class="btn">View</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <a href="{% url 'projects' project.pk %}"><h5>{{project.title}}</h5></a>
+                <hr class="bg-info">
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
