@@ -3,10 +3,12 @@
 
 {% block content %}
 <div class="container">
-    <div class="overlay">
-        <img src="{{projects.image_landing.url}}" alt="">
-    </div>
     <div class="row">
+        <div class="col-md-12">
+            <img src="{{project.image_landing.url}}" alt="">
+        </div>
+    </div>
+    <div class="row mt-5">
         <div class="col-md-3">
             <h3>Content</h3>
             <hr class="bg-default">
@@ -28,12 +30,17 @@
             <h4>{{average}}</h4>
         </div>
     </div>
-    {% if user.is_authenticated %}
-    <button class="btn btn-outline-info" type="button
-    " data-toggle="modal" data-target="#VotesForm">Rate</button>
-    <a href="{{projects.link}}" class="btn btn-md" target="_blank">LIVE SITE</a>
-    {% if user.id not in auth %}
-    <div class="modal fade" id="VotesForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="row mt-3">
+        {% if user.is_authenticated %}
+        <div class="col-md-12">
+            <button class="btn btn-outline-secondary" type="button
+                " data-toggle="modal" data-target="#VotesForm">Rate</button>
+            <a href="{{projects.link}}" class="btn btn-secondary float-right" target="_blank">Live Site</a>
+        </div>
+    </div>
+    {% if user.id not in rate %}
+    <div class="modal fade" id="VotesForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header text-center">
@@ -44,10 +51,11 @@
                 </div>
                 <div class="modal-body">
                     <div class="form animated slideInDown">
-                        <form action="/projects/{{projects.id}}" method="POST">
+                        <form action="/projects/{{project.id}}" method="POST">
                             {% csrf_token %}
                             {% bootstrap_form form %}
-                            <button class="btn btn-outline-info modal-footer d-flex justify-content-center" type="submit">Submit</button>
+                            <button class="btn btn-outline-info modal-footer d-flex justify-content-center"
+                                type="submit">Submit</button>
                         </form>
                     </div>
                 </div>
@@ -60,17 +68,17 @@
     {% else %}
     <a href="/accounts/login" class="btn btn-outline-info">Log in to rate</a>
     {% endif %}
-    <div class="card">
+    <div class="card mt-5">
         <div class="card-header">
-            <h4>Total Votes: {{all|length}}</h4>
+            <h4>Total Votes: {{rate|length}}</h4>
         </div>
         <div class="list-group">
             <ul class="list-group">
-                {% if all %}
+                {% if rate %}
                 <table class="table">
                     <th>Voters</th>
                     <th>Rating</th>
-                    {% for you in all %}
+                    {% for you in rate %}
                     <tr>
                         <td>
                             <img src="{{you.user.profile.profile_photo.url}}" alt="">
