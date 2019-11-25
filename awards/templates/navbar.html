@@ -1,66 +1,53 @@
-{% load bootstrap4 %}
-{% load static%}
-<nav class="navbar navbar-expand-lg navbar-light">
-    <div class="container">
-        <a class="smooth-scroll" href="/home"> <img src="{% static 'images/logo.png' %}" height="50" width="50" alt=""> <img src="" class="img-fluid pl-3"></a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fa fa-bars"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-4 mx-auto">
-                        <form class="form-inline my-2 my-lg-0" role="search" action="">
-                            <input class="form-control my-2 my-sm-0 search-input" name="username" type="search" placeholder="Search Here..." aria-label="Search">
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="">
+<nav style="background-color:white;" class="animated slideInDown navbar-collapse navbar-expand-lg sticky-top ">
+    <div class="navbar mx-5">
+        <div id="logo">
+            <a href="{% url 'home' %}" id="brand" class="text-dark"> <strong>Web Awards</strong></a>
 
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link open-nav" href="" data-toggle="tooltip" data-placement="bottom" title="Upload Image">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                    </a>
-
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link open-nav" href="#" data-toggle="tooltip" data-placement="bottom" title="Discover People">
-                        <i class="far fa-heart"></i>
-                    </a>
-
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link open-nav" href="" data-toggle="tooltip" data-placement="bottom" title="Profile">
-                        <i class="far fa-user show"></i>
-                    </a>
-
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link open-nav" data-toggle="modal" data-target="#settings" data-toggle="tooltip" data-placement="bottom" title="Settings">
-                        <i class="fas fa-th"></i>
-                    </a>
-
-                </li>
-
-            </ul>
         </div>
+        <div class="dropdown dropleft">
+
+            <!--Trigger-->
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">APIS</button>
+
+
+            <!--Menu-->
+            <div class="dropdown-menu dropdown-info">
+                <a class="dropdown-item" href="{}">Profiles</a>
+                <a class="dropdown-item" href="{}">Projects</a>
+            </div>
+        </div>
+        <div class="nav-search">
+            <form class="form-inline md-form form-md active-pink active-pink-2 mt-2"
+                action="{% url 'search_results' %}">
+                <input class="form-control form-control-md ml-3 w-75" type="text" placeholder="Search"
+                    aria-label="Search" name="titles">
+            </form>
+        </div>
+        <div class="nav-right">
+            {% if user.is_authenticated %}
+            <a href="{% url 'profile' username=user %}" class="text-dark mr-4">
+                <!-- <img class="rounded-circle" alt="" src="{{user.profile.profile_photo.url}}" height="60" width="60" /> -->
+                Profile
+            </a>
+
+            <a href="/logout/" class="text-dark">Log Out</a>
+
+
+            <a href="{% url 'post_site' %}" id="projects" class="btn btn-dark">SUBMIT PROJECT</a>
+
+
+            {% else %}
+
+            <a href="/accounts/login" class="text-dark">Log In</a>
+
+
+
+            {%  endif %}
+
+
+
+
         </div>
     </div>
 </nav>
-
-<div class="modal fade" id="settings" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <ul class="list-group">
-                <li class="list-group-item text-center"><a href="/accounts/password/change">Change Password</a></li>
-                <li class="list-group-item text-center"><a href="/logout/">Log Out</a></li>
-                <li class="list-group-item text-center"><a data-dismiss="modal">Cancel</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
