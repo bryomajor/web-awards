@@ -1,23 +1,25 @@
-{% extends 'registration/base.html' %}
-{% load bootstrap %}
+{% extends 'base.html' %}
+{% load bootstrap4 %}
 {% block content %}
-<div class="row">
-    <div class="col-md-4"></div>
-    <div class="col-md-6">
-        <div class="card card-cascade text-center">
-            <div class="card-body card-body-cascade">
-                <h1 class="text-center">Upload Site</h1>
-                <br>
-                <form action="{% url 'post_site' %}" method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {% bootstrap_form form %}
-                    <div class="form-group">
-                        <input type="submit" class="btn btn-md text-center" value="Upload">
-                    </div>
-                    {{form.media}}
-                </form>
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-6 mx-auto">
+            <div class="card card-cascade text-center">
+                <div class="card-body card-body-cascade">
+                    <h1 class="text-center">Upload Site</h1>
+                    <br>
+                    <form action="{% url 'post_site' %}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-md text-center" value="Upload">
+                        </div>
+                        {{form.media}}
+                    </form>
+                </div>
             </div>
         </div>
     </div>
+
 </div>
 {% endblock %}
