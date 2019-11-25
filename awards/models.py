@@ -12,7 +12,6 @@ class Profile(models.Model):
     bio = HTMLField()
     profile_photo = ImageField(blank = True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    website = URLOrRelativeURLField()
     phone_number = models.CharField(max_length=12)
 
     @receiver(post_save, sender = User)
@@ -71,18 +70,39 @@ class Projects(models.Model):
         projects = Projects.objects.filter(profile__pk=profile)
         return projects
 
+    
+
 
     def __str__(self):
         return self.title
 
 
 class Rates(models.Model):
-    design = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(10)])
-    usability = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(10)])
-    content = models.PositiveIntegerField(default=0, validators=[10])
+    design = models.IntegerField(default=0, validators=[MaxValueValidator(10)])
+    usability = models.IntegerField(default=0, validators=[MaxValueValidator(10)])
+    content = models.IntegerField(default=0, validators=[10])
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     project = models.IntegerField(default=0)
 
+    class Meta:
+        unique_together = (('user', 'design', 'usability', 'content', 'project'))
+        index_together = (('user', 'design', 'usability', 'content', 'project'))
+
+        ordering = ['-id']
+    
+    def save_rate(self):
+        self.save()
+
+    def _get_total(self):
+        return (self.design + self.usability + self.content) * 0.33
+
+    total = property(_get_total)
+
+    @classmethod
+    def get_rates(cls, id):
+        rates = cls.objects.all()
+        return rates
+       
 
 class Comments(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
