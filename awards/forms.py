@@ -1,5 +1,7 @@
 from django import forms
 from .models import Profile, Projects, Rates, Comments
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 class ProjectUploadForm(forms.ModelForm):
     class Meta:
@@ -9,7 +11,7 @@ class ProjectUploadForm(forms.ModelForm):
 class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('profile_photo', 'bio', 'website')
+        exclude = ['user']
 
 class VotesForm(forms.ModelForm):
     class Meta:
