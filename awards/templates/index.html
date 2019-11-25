@@ -2,21 +2,43 @@
 {% load static%}
 {% load bootstrap4 %}
 {% block content %}
+<style>
+    .masthead {
+        height: 100vh;
+        min-height: 500px;
+        background-image: url('https://octa-digital.co/wp-content/uploads/2017/10/web-design-2018.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+</style>
+<header class="masthead">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12 text-center">
+                <h1 class="font-weight-bold">Welcome To Web Awards</h1>
+                <p class="lead">Start rating your favorite websites</p>
+            </div>
+        </div>
+    </div>
+</header>
 <div class="container">
-    <h2 class="text-center">TOP SITES</h2>
+    <h2 class="text-center mt-5">Submitted Sites</h2>
     <div class="row">
         {% for project in projects %}
-        <div class="col-md-4">
+        <div class="col-md-4 mt-5">
             <div class="card-group">
                 <img src="{{project.image_landing.url}}" alt="" class="card-img-top">
-                <a href="{% url 'projects' project.pk %}" class="btn">VIEW</a>
+                
             </div>
             <div class="card-body">
-                <a href="{% url 'projects' project.pk %}">
-                    <h5>{{project.title}}</h5>
+                <a href="{% url 'projects' project.pk %}" class="float-left text-dark">
+                    <h5><strong>{{project.title}}</strong></h5>
                 </a>
-                <p>{{project.pub_date| date:"F d,Y"}}</p>
-                <h6>By {{project.profile}}</h6>
+                <a href="{% url 'projects' project.pk %}" class="btn btn-sm btn-secondary ml-5">Review</a>
+                <hr>
+                <p class="float-left">{{project.pub_date| date:"F d, Y"}}</p>
+                <h6 class="float-right">By {{project.profile}}</h6>
             </div>
         </div>
         {% endfor %}
