@@ -15,7 +15,7 @@ from .permissions import IsAdminOrReadOnly
 def index(request):
     projects = Projects.objects.all()
     context = {
-        'projects': projects,
+    'projects': projects,
     }
     return render(request, 'index.html', context)
 
@@ -38,7 +38,7 @@ def projects(request, pk):
     
     return render(request, 'single_post.html', {'form':form, 'project':project, 'rate':rate})
 
-@login_required(login_url='/accounts/login/')
+@login_required(login_url  ='/accounts/login/')
 def profile(request, username):
     profile = User.objects.get(username = username)
 
