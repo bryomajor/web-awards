@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'pyuploadcare.dj',
     'tinymce',
     'bootstrap4',
+    'url_or_relative_url_field',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

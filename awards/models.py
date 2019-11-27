@@ -4,6 +4,7 @@ from tinymce.models import HTMLField
 from pyuploadcare.dj.models import ImageField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from url_or_relative_url_field.fields import URLOrRelativeURLField
 from django.core.validators import MaxValueValidator
 
 # Create your models here.
