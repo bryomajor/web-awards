@@ -20,6 +20,7 @@ As a user of the web application you will be able to:
 3. Post projects
 4. Rate a project
 5. Edit your profile
+6. Generate APIs
 
 ## Specifications
 | Behavior            | Input                         | Output                        | 
