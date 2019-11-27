@@ -100,7 +100,6 @@ def search_results(request):
 
 
 class ProfileList(APIView):
-    permission_classes = (IsAdminOrReadOnly)
     def get(self, request, format=None):
         all_profiles = Profile.objects.all()
         serializers = ProfileSerializer(all_profiles, many=True)
@@ -114,7 +113,6 @@ class ProfileList(APIView):
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ProjectsList(APIView):
-    permission_classes = (IsAdminOrReadOnly)
     def get(self, request, format=None):
         all_projects = Projects.objects.all()
         serializers = ProjectsSerializer(all_projects, many=True)
